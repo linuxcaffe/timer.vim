@@ -6,6 +6,10 @@ let s:obj = {
 \   },
 \ }
 
+function! timer#clear()
+  let s:obj.interval_functions = {}
+endfunction
+
 function! timer#start()
   if s:obj.status !=# 'running'
     let s:obj.status = 'running'
