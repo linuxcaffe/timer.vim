@@ -9,7 +9,6 @@ let s:obj = {
 function! timer#clear()
   let s:obj.interval_functions = {}
 endfunction
-
 function! timer#start()
   if s:obj.status !=# 'running'
     let s:obj.status = 'running'
@@ -19,14 +18,12 @@ function! timer#start()
     augroup END
   endif
 endfunction
-
 function! timer#stop()
   augroup timer
     autocmd!
   augroup END
   let s:obj.status = 'stop'
 endfunction
-
 function! timer#regist_interval(funcname,interval_ms)
   let key = printf('_%d_%s', a:interval_ms, a:funcname)
   let s:obj.interval_functions[key] = {
@@ -35,13 +32,11 @@ function! timer#regist_interval(funcname,interval_ms)
   \ }
   return key
 endfunction
-
 function! timer#unregist_interval(key)
   if has_key(s:obj.interval_functions, a:key)
     call remove(s:obj.interval_functions, a:key)
   endif
 endfunction
-
 function! s:caller()
   if &updatetime != 1000
     call timer#stop()
@@ -63,5 +58,4 @@ endfunction
 " call timer#unregist_interval(s:key)
 " call timer#start()
 
-
-
+"  vim: set ts=2 sts=2 sw=2 ft=vim fdm=manual ff=unix :
