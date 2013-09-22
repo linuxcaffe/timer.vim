@@ -52,7 +52,7 @@ function! s:caller()
   call feedkeys(mode() ==# 'i' ? "\<C-g>\<ESC>" : "g\<ESC>", 'n')
 endfunction
 
-call timer#stop()
+" call timer#stop()
 " call timer#regist_interval('timer#test',1000)
 " call timer#regist_interval('timer#test',3000)
 " let s:key = timer#regist_interval('timer#test',700)
