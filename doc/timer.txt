@@ -26,13 +26,40 @@ CONTENTS               		   	       	              *timer-contents*
 
 Introduction		|timer-introduction|
 Functions		|timer-functions|
+Variables		|timer-variables|
 
 ==============================================================================
 INTRODUCTION						  *timer-introduction*
 
 This is a timer using and managing &updatetime.
 You can call a function by any interval using a timer.
-You must set &updatetime to 1000.
+
+>
+    " Clear interval functions.
+    call timer#clear()
+
+    function! g:statusline()
+      let &l:statusline = printf('%%t %%y %%m (%s)', tr(getcwd(),'\','/'))
+    endfunction
+   
+    " Add an interval function. every 1000ms
+    call timer#regist_interval('g:statusline',1000)
+
+    function! g:show_now()
+      if mode() !=# 'i'
+        echo strftime("%Y/%b/%d %X")
+      endif
+    endfunction
+
+    " Add an interval function. every 1000ms
+    let key = timer#regist_interval('g:show_now',1000)
+
+    " Remove the interval function.
+    call timer#unregist_interval(key)
+
+    " Start.
+    call timer#start()
+<
 
 ==============================================================================
 FUNCTIONS                                                    *timer-functions*
@@ -40,8 +67,15 @@ FUNCTIONS                                                    *timer-functions*
 * timer#start()                                          *timer-timer#start()*
 * timer#stop()                                            *timer-timer#stop()*
 * timer#regist_interval(funcname,interval_ms)  *timer-timer#regist_interval()*
-* timer#unregist_interval()                  *timer-timer#unregist_interval()*
+* timer#unregist_interval(key)               *timer-timer#unregist_interval()*
 * timer#clear()                                          *timer-timer#clear()*
+
+==============================================================================
+VARIABLES                                                    *timer-variables*
+
+* g:timer#updatetime                                      *g:timer#updatetime*
+
+default: 1000
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
